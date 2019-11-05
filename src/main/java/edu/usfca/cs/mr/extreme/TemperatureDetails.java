@@ -116,6 +116,6 @@ public class TemperatureDetails implements Writable {
 
     @Override
     public String toString(){
-        return String.format(" Airtemp : "+this.airTemperature+" SurfaceTemp : "+this.surfaceTemperature+" Latitude : "+this.latitude+" Longitude : "+this.longitude);
+        return String.format(" Airtemp : "+this.airTemperature+" SurfaceTemp : "+this.surfaceTemperature+" Latitude : "+this.latitude+" Longitude : "+this.longitude+" Date :"+this.date);
     }
 }

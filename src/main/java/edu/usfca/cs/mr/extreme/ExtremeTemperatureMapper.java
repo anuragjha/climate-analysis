@@ -18,14 +18,14 @@ public class ExtremeTemperatureMapper extends Mapper<LongWritable,Text, Text, Te
     public void map(LongWritable longWritable, Text value, Context context) throws IOException, InterruptedException {
 
         String line = value.toString();
-        Long date = Long.parseLong(line.substring(7,14));
+        Long date = Long.parseLong(line.substring(6,14));
         Long time = Long.parseLong(line.substring(16,19));
         Float latitude = Float.parseFloat(line.substring(50,56));
         Float longitude = Float.parseFloat(line.substring(42,48));
         Float airTemp = Float.parseFloat(line.substring(58,64));
         Float surfaceTemp = Float.parseFloat(line.substring(83,89));
 
-        System.out.println("Line :" +airTemp);
+        System.out.println("Line :" +date);
 
         String key = Geohash.encode(Float.valueOf(latitude),Float.valueOf(longitude),10);
 
