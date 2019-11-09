@@ -57,6 +57,7 @@ public class NCDCWritable implements Writable {
     private Text wet_flag;
     private Text wind_1_5;
     private Text wind_flag;
+    private Text geohash;
 
 
     public NCDCWritable() {
@@ -84,7 +85,16 @@ public class NCDCWritable implements Writable {
         this.wet_flag = new Text();
         this.wind_1_5 = new Text();
         this.wind_flag = new Text();
+        this.geohash = new Text();
+    }
 
+    public Text getGeohash() {
+        return geohash;
+    }
+
+    public NCDCWritable setGeohash(Text geohash) {
+        this.geohash = geohash;
+        return this;
     }
 
     public Text getWbanno() {
@@ -319,7 +329,7 @@ public class NCDCWritable implements Writable {
         wet_flag.readFields(dataInput);
         wind_1_5.readFields(dataInput);
         wind_flag.readFields(dataInput);
-
+        geohash.readFields(dataInput);
     }
 
     @Override
@@ -347,6 +357,7 @@ public class NCDCWritable implements Writable {
         wet_flag.write(dataOutput);
         wind_1_5.write(dataOutput);
         wind_flag.write(dataOutput);
+        geohash.write(dataOutput);
     }
 
     public String toString() {
