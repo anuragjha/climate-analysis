@@ -1,5 +1,6 @@
 package edu.usfca.cs.mr.util;
 
+import org.apache.hadoop.io.DoubleWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.io.Writable;
 
@@ -42,20 +43,20 @@ public class NCDCWritable implements Writable {
     private Text crx_vn;
     private Text longitude;
     private Text latitude;
-    private Text air_temperature;
-    private Text precipitation;
-    private Text solar_radiation;
+    private DoubleWritable air_temperature;
+    private DoubleWritable precipitation;
+    private DoubleWritable solar_radiation;
     private Text sr_flag;
-    private Text surface_temperature;
+    private DoubleWritable surface_temperature;
     private Text st_type;
     private Text st_flag;
-    private Text relative_humidity;
+    private DoubleWritable relative_humidity;
     private Text rh_flag;
-    private Text soil_moisture_5;
-    private Text soil_temperature_5;
-    private Text wetness;
+    private DoubleWritable soil_moisture_5;
+    private DoubleWritable soil_temperature_5;
+    private DoubleWritable wetness;
     private Text wet_flag;
-    private Text wind_1_5;
+    private DoubleWritable wind_1_5;
     private Text wind_flag;
     private Text geohash;
 
@@ -70,20 +71,20 @@ public class NCDCWritable implements Writable {
         this.crx_vn = new Text();
         this.longitude = new Text();
         this.latitude = new Text();
-        this.air_temperature = new Text();
-        this.precipitation = new Text();
-        this.solar_radiation = new Text();
+        this.air_temperature = new DoubleWritable();
+        this.precipitation = new DoubleWritable();
+        this.solar_radiation = new DoubleWritable();
         this.sr_flag = new Text();
-        this.surface_temperature = new Text();
+        this.surface_temperature = new DoubleWritable();
         this.st_type = new Text();
         this.st_flag = new Text();
-        this.relative_humidity = new Text();
+        this.relative_humidity = new DoubleWritable();
         this.rh_flag = new Text();
-        this.soil_moisture_5 = new Text();
-        this.soil_temperature_5 = new Text();
-        this.wetness = new Text();
+        this.soil_moisture_5 = new DoubleWritable();
+        this.soil_temperature_5 = new DoubleWritable();
+        this.wetness = new DoubleWritable();
         this.wet_flag = new Text();
-        this.wind_1_5 = new Text();
+        this.wind_1_5 = new DoubleWritable();
         this.wind_flag = new Text();
         this.geohash = new Text();
     }
@@ -169,29 +170,29 @@ public class NCDCWritable implements Writable {
         return this;
     }
 
-    public Text getAir_temperature() {
+    public DoubleWritable getAir_temperature() {
         return air_temperature;
     }
 
-    public NCDCWritable setAir_temperature(Text air_temperature) {
+    public NCDCWritable setAir_temperature(DoubleWritable air_temperature) {
         this.air_temperature = air_temperature;
         return this;
     }
 
-    public Text getPrecipitation() {
+    public DoubleWritable getPrecipitation() {
         return precipitation;
     }
 
-    public NCDCWritable setPrecipitation(Text precipitation) {
+    public NCDCWritable setPrecipitation(DoubleWritable precipitation) {
         this.precipitation = precipitation;
         return this;
     }
 
-    public Text getSolar_radiation() {
+    public DoubleWritable getSolar_radiation() {
         return solar_radiation;
     }
 
-    public NCDCWritable setSolar_radiation(Text solar_radiation) {
+    public NCDCWritable setSolar_radiation(DoubleWritable solar_radiation) {
         this.solar_radiation = solar_radiation;
         return this;
     }
@@ -205,11 +206,11 @@ public class NCDCWritable implements Writable {
         return this;
     }
 
-    public Text getSurface_temperature() {
+    public DoubleWritable getSurface_temperature() {
         return surface_temperature;
     }
 
-    public NCDCWritable setSurface_temperature(Text surface_temperature) {
+    public NCDCWritable setSurface_temperature(DoubleWritable surface_temperature) {
         this.surface_temperature = surface_temperature;
         return this;
     }
@@ -232,11 +233,11 @@ public class NCDCWritable implements Writable {
         return this;
     }
 
-    public Text getRelative_humidity() {
+    public DoubleWritable getRelative_humidity() {
         return relative_humidity;
     }
 
-    public NCDCWritable setRelative_humidity(Text relative_humidity) {
+    public NCDCWritable setRelative_humidity(DoubleWritable relative_humidity) {
         this.relative_humidity = relative_humidity;
         return this;
     }
@@ -250,29 +251,29 @@ public class NCDCWritable implements Writable {
         return this;
     }
 
-    public Text getSoil_moisture_5() {
+    public DoubleWritable getSoil_moisture_5() {
         return soil_moisture_5;
     }
 
-    public NCDCWritable setSoil_moisture_5(Text soil_moisture_5) {
+    public NCDCWritable setSoil_moisture_5(DoubleWritable soil_moisture_5) {
         this.soil_moisture_5 = soil_moisture_5;
         return this;
     }
 
-    public Text getSoil_temperature_5() {
+    public DoubleWritable getSoil_temperature_5() {
         return soil_temperature_5;
     }
 
-    public NCDCWritable setSoil_temperature_5(Text soil_temperature_5) {
+    public NCDCWritable setSoil_temperature_5(DoubleWritable soil_temperature_5) {
         this.soil_temperature_5 = soil_temperature_5;
         return this;
     }
 
-    public Text getWetness() {
+    public DoubleWritable getWetness() {
         return wetness;
     }
 
-    public NCDCWritable setWetness(Text wetness) {
+    public NCDCWritable setWetness(DoubleWritable wetness) {
         this.wetness = wetness;
         return this;
     }
@@ -286,11 +287,11 @@ public class NCDCWritable implements Writable {
         return this;
     }
 
-    public Text getWind_1_5() {
+    public DoubleWritable getWind_1_5() {
         return wind_1_5;
     }
 
-    public NCDCWritable setWind_1_5(Text wind_1_5) {
+    public NCDCWritable setWind_1_5(DoubleWritable wind_1_5) {
         this.wind_1_5 = wind_1_5;
         return this;
     }

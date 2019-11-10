@@ -1,9 +1,5 @@
-package edu.usfca.cs.mr.precipitation;
+package edu.usfca.cs.mr.climateChart;
 
-import edu.usfca.cs.mr.extremes.ExtremeTempJob;
-import edu.usfca.cs.mr.extremes.ExtremeTempMapper;
-import edu.usfca.cs.mr.extremes.ExtremeTempReducer;
-import edu.usfca.cs.mr.util.NCDCWritable;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.Text;
@@ -11,20 +7,20 @@ import org.apache.hadoop.mapreduce.Job;
 import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 
-public class PrecipitationJob {
+public class ClimateChartJob {
 
     public static void main(String[] args) {
         try {
             Configuration conf = new Configuration();
 
             /* Job Name. You'll see this in the YARN webapp */
-            Job job = Job.getInstance(conf, "Precipitation job");
+            Job job = Job.getInstance(conf, "Climate chart job");
 
             /* Current class */
-            job.setJarByClass(PrecipitationJob.class);
+            job.setJarByClass(ClimateChartJob.class);
 
             /* Mapper class */
-            job.setMapperClass(PrecipitationMapper.class);
+            job.setMapperClass(ClimateChartMapper.class);
 
             /* Combiner class. Combiners are run between the Map and Reduce
              * phases to reduce the amount of output that must be transmitted.
@@ -35,11 +31,11 @@ public class PrecipitationJob {
             //job.setCombinerClass(WordCountReducer.class);
 
             /* Reducer class */
-            job.setReducerClass(PrecipitationReducer.class);
+            job.setReducerClass(ClimateChartReducer.class);
 
             /* Outputs from the Mapper. */
             job.setMapOutputKeyClass(Text.class);
-            job.setMapOutputValueClass(Text.class);
+            job.setMapOutputValueClass(CCMapperWritable.class);
 
             /* Outputs from the Reducer */
             job.setOutputKeyClass(Text.class);
@@ -62,6 +58,8 @@ public class PrecipitationJob {
             System.err.println(e.getMessage());
         }
     }
+
+
 
 
 }
