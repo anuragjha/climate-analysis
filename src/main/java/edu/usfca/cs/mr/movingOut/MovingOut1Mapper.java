@@ -3,6 +3,7 @@ package edu.usfca.cs.mr.movingOut;
 import edu.usfca.cs.mr.util.Geohash;
 import edu.usfca.cs.mr.util.Line;
 import edu.usfca.cs.mr.util.NCDCWritable;
+import org.apache.hadoop.io.DoubleWritable;
 import org.apache.hadoop.io.LongWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Mapper;
@@ -38,9 +39,9 @@ public class MovingOut1Mapper
                 context.write(
                         new Text(geohash),
                         new NCDCWritable()
-                                .setAir_temperature(Line.getAir_temperature(line))
-                                .setPrecipitation(Line.getPrecipitation(line))
-                                .setSolar_radiation(Line.getSolar_radiation(line))
+                                .setAir_temperature(new DoubleWritable(Line.getAir_temperature(line)))
+                                .setPrecipitation(new DoubleWritable(Line.getPrecipitation(line)))
+                                .setSolar_radiation(new DoubleWritable(Line.getSolar_radiation(line)))
                 );
             }
         }

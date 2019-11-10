@@ -21,10 +21,10 @@ extends Mapper<LongWritable, Text, Text, NCDCWritable> {
         String line = value.toString();
 
         NCDCWritable ncdc =  new NCDCWritable()
-                .setUtc_date(Line.getUtc_date(line))
-                .setUtc_time(Line.getUtc_time(line))
-                .setLongitude(Line.getLongitude(line))
-                .setLatitude(Line.getLatitude(line));
+                .setUtc_date(new Text(Line.getUtc_date(line)))
+                .setUtc_time(new Text(Line.getUtc_time(line)))
+                .setLongitude(new Text(Line.getLongitude(line)))
+                .setLatitude(new Text(Line.getLatitude(line)));
 
         if (Float.parseFloat(Line.getAir_temperature(line).toString()) >= maxTemp) {
             System.out.println("air_temp: "+ Line.getAir_temperature(line));
@@ -33,7 +33,7 @@ extends Mapper<LongWritable, Text, Text, NCDCWritable> {
             maxTemp = Float.parseFloat(Line.getAir_temperature(line).toString());
 
             context.write(
-                    Line.getAir_temperature(line), /*Line.getUtc_date(line)*/
+                    new Text(Line.getAir_temperature(line).toString()), /*Line.getUtc_date(line)*/
                     ncdc
             );
         }
