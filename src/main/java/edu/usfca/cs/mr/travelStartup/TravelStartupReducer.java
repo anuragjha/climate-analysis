@@ -18,7 +18,6 @@ public class TravelStartupReducer extends Reducer<Text, NCDCWritable,Text,Text> 
 
         HashMap<String,TotalTempAndHumidity> geohashToTotal = new HashMap<>();
 
-
         for(NCDCWritable ncdcWritable : values){
             String geohash = ncdcWritable.getGeohash().toString();
             float airTemp = Float.parseFloat(ncdcWritable.getAir_temperature().toString());
@@ -40,7 +39,7 @@ public class TravelStartupReducer extends Reducer<Text, NCDCWritable,Text,Text> 
             float avgAirTemp =tth.getAirtemp()/tth.getCount();
             float avgHumidity = tth.getHumidity()/tth.getCount();
             tth.setComfortIndex((avgAirTemp + avgHumidity)/40);
-            if(tth.getComfortIndex() > 2.30 && tth.getComfortIndex() < 9){
+            if(tth.getComfortIndex() > 2.30 && tth.getComfortIndex() < 400){
                 bestComfortIndex = tth.getComfortIndex();
                 geoHashForBestComfortIndex = geo;
                 System.out.println("bestComfortIndex : "+bestComfortIndex+" "+geoHashForBestComfortIndex+" "+key);
