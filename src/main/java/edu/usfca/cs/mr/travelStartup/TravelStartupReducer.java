@@ -9,15 +9,15 @@ import java.util.HashMap;
 
 public class TravelStartupReducer extends Reducer<Text, NCDCWritable,Text,Text> {
 
-    float bestComfortIndex = 0;
-    String geoHashForBestComfortIndex = "";
+    private float bestComfortIndex = 0;
+    private String geoHashForBestComfortIndex = "";
 
     @Override
     protected void reduce(Text key, Iterable<NCDCWritable> values, Context context)
             throws IOException, InterruptedException{
 
         HashMap<String,TotalTempAndHumidity> geohashToTotal = new HashMap<>();
-
+        System.out.println("In Reducer!");
 
         for(NCDCWritable ncdcWritable : values){
             String geohash = ncdcWritable.getGeohash().toString();
@@ -36,13 +36,17 @@ public class TravelStartupReducer extends Reducer<Text, NCDCWritable,Text,Text> 
             }
         }
         for (String geo : geohashToTotal.keySet()){
+            System.out.print("String goe : "+geo);
             TotalTempAndHumidity tth = geohashToTotal.get(geo);
             float avgAirTemp =tth.getAirtemp()/tth.getCount();
             float avgHumidity = tth.getHumidity()/tth.getCount();
             tth.setComfortIndex((avgAirTemp + avgHumidity)/40);
-            if(tth.getComfortIndex() > 2.30 && tth.getComfortIndex() < 9){
-                bestComfortIndex = tth.getComfortIndex();
-                geoHashForBestComfortIndex = geo;
+            System.out.println("  Comfort Index : "+tth.getComfortIndex());
+            if(tth.getComfortIndex() > 0 && tth.getComfortIndex() < 9){
+                if(tth.getComfortIndex() > bestComfortIndex) {
+                    bestComfortIndex = tth.getComfortIndex();
+                    geoHashForBestComfortIndex = geo;
+                }
                 System.out.println("bestComfortIndex : "+bestComfortIndex+" "+geoHashForBestComfortIndex+" "+key);
             }
         }
