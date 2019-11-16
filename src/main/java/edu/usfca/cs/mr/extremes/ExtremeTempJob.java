@@ -39,7 +39,7 @@ public class ExtremeTempJob {
 
             /* Outputs from the Mapper. */
             job.setMapOutputKeyClass(Text.class);
-            job.setMapOutputValueClass(NCDCWritable.class);
+            job.setMapOutputValueClass(ETWritable.class);
 
             /* Outputs from the Reducer */
             job.setOutputKeyClass(Text.class);
