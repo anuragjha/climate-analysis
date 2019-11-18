@@ -12,6 +12,7 @@ public class Config {
     private String dryingOutGeoHash;
     private String movingOutGeoHash;
     private String[] travelStartupGeoHashes;
+    private String climateChartHash;
 
     public Config() {
     }
@@ -26,6 +27,10 @@ public class Config {
 
     public String[] getTravelStartupGeoHashes() {
         return travelStartupGeoHashes;
+    }
+
+    public String getClimateChartHash() {
+        return climateChartHash;
     }
 
     public static Config readConfig(String filename) {

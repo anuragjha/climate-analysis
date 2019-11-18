@@ -11,17 +11,28 @@ import java.io.IOException;
 public class CCMapperWritable implements Writable {
 
     private Text monthNum;
+    private Text geoHash;
     private DoubleWritable airTemp;
     private DoubleWritable precip;
 
     public CCMapperWritable() {
         monthNum = new Text();
+        geoHash = new Text();
         airTemp = new DoubleWritable();
         precip = new DoubleWritable();
     }
 
     public Text getMonthNum() {
         return monthNum;
+    }
+
+    public Text getGeoHash() {
+        return geoHash;
+    }
+
+    public CCMapperWritable setGeoHash(Text geoHash) {
+        this.geoHash = geoHash;
+        return this;
     }
 
     public CCMapperWritable setMonthNum(Text monthNum) {
@@ -50,6 +61,7 @@ public class CCMapperWritable implements Writable {
     @Override
     public void write(DataOutput dataOutput) throws IOException {
         monthNum.write(dataOutput);
+        geoHash.write(dataOutput);
         airTemp.write(dataOutput);
         precip.write(dataOutput);
     }
@@ -57,6 +69,7 @@ public class CCMapperWritable implements Writable {
     @Override
     public void readFields(DataInput dataInput) throws IOException {
         monthNum.readFields(dataInput);
+        geoHash.readFields(dataInput);
         airTemp.readFields(dataInput);
         precip.readFields(dataInput);
     }
