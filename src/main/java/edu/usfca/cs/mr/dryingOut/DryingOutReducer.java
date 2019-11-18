@@ -1,22 +1,24 @@
 package edu.usfca.cs.mr.dryingOut;
 
+import org.apache.hadoop.io.DoubleWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Reducer;
 
 import java.io.IOException;
+import java.text.DecimalFormat;
 
-public class DryingOutReducer extends Reducer<Text, Text, Text, Text> {
+public class DryingOutReducer extends Reducer<Text, DoubleWritable, Text, Text> {
 
     @Override
-    protected void reduce(Text key, Iterable<Text> values, Context context)
+    protected void reduce(Text key, Iterable<DoubleWritable> values, Context context)
             throws IOException, InterruptedException {
 
         //System.out.println("In Reducer");
         float sumP = 0;
         int count = 0;
-        for (Text val : values) {
+        for (DoubleWritable val : values) {
             count++;
-            sumP += Double.parseDouble(val.toString());
+            sumP += val.get();//Double.parseDouble(val.toString());
         }
 
         double avgP = sumP / count;

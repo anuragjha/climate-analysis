@@ -2,6 +2,7 @@ package edu.usfca.cs.mr.dryingOut;
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
+import org.apache.hadoop.io.DoubleWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Job;
 import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
@@ -35,7 +36,7 @@ public class DryingOutJob {
 
             /* Outputs from the Mapper. */
             job.setMapOutputKeyClass(Text.class);
-            job.setMapOutputValueClass(Text.class);
+            job.setMapOutputValueClass(DoubleWritable.class);
 
             /* Outputs from the Reducer */
             job.setOutputKeyClass(Text.class);

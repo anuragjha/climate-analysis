@@ -13,26 +13,41 @@ public class MovingOut1Reducer extends Reducer<Text, NCDCWritable, Text, Text> {
             throws IOException, InterruptedException {
 
         System.out.println("In Reducer");
-        float sumAT = 0;
-        float sumP = 0;
-        float sumSR = 0;
+        String latitude = "";
+        String longitude = "";
+        double sumAT = 0;
+        double sumP = 0;
+//        double sumSR = 0;
+        double sumW = 0;
         int count = 0;
 
+        //System.out.println("GeoHash: "+ key);
         for (NCDCWritable val : values) {
 
-            sumAT += Float.parseFloat(val.getAir_temperature().toString());
-            sumP += Float.parseFloat(val.getPrecipitation().toString());
-            sumSR += Float.parseFloat(val.getSolar_radiation().toString());
+            if (!latitude.equalsIgnoreCase(val.getLatitude().toString())) {
+                latitude = val.getLatitude().toString();
+                //System.out.println("Latitude: "+ latitude);
+            }
+            if (!longitude.equalsIgnoreCase(val.getLongitude().toString())) {
+                longitude = val.getLongitude().toString();
+                //System.out.println("Longitude: "+ longitude);
+            }
+
+            sumAT += val.getAir_temperature().get();
+            sumP += val.getPrecipitation().get();
+//            sumSR += val.getSolar_radiation().get();
+            sumW += val.getWind_1_5().get();
             count++;
         }
 
-        float avgAT = sumAT / count;
-        float avgP = sumP / count;
-        float avgSR = sumSR / count;
+        double avgAT = sumAT / count;
+        double avgP = sumP / count;
+//        double avgSR = sumSR / count;
+        double avgW = sumW / count;
 
 
-        String outStr = "avgAT: "+ avgAT+ ", avgP: "+ avgP+ ", avgSR: "+avgSR;
-        System.out.println(outStr);
+        String outStr = ","+latitude+","+longitude+","+avgAT+","+avgP+/*","+avgSR+*/","+avgW;
+        //System.out.println(outStr);
         context.write(key, new Text(outStr));
     }
 

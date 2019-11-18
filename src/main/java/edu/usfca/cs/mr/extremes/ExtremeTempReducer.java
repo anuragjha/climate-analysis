@@ -1,5 +1,6 @@
 package edu.usfca.cs.mr.extremes;
 
+import edu.usfca.cs.mr.util.Line;
 import edu.usfca.cs.mr.util.NCDCWritable;
 import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.Text;
@@ -39,26 +40,33 @@ public class ExtremeTempReducer
             Double currSurfaceTemp = value.getSurFaceTemp().get();
 
 
-            if(minSurfaceTemp > currSurfaceTemp) {
-                minSurfaceTemp = currSurfaceTemp;
-                minSurfaceTempETW = "MIN SURFACE TEMP: "+value.toString();
-//                toWrite.add(value);
+            if(isCleanSurTempData(currSurfaceTemp)) {
+                if(minSurfaceTemp > currSurfaceTemp) {
+                    minSurfaceTemp = currSurfaceTemp;
+                    minSurfaceTempETW = "MIN-SURFACE-TEMP," + value.toString();
+//                    toWrite.add(minSurfaceTempETW);
+                }
+                if(maxSurfaceTemp < currSurfaceTemp) {
+                    maxSurfaceTemp = currSurfaceTemp;
+                    maxSurfaceTempETW = "MAX-SURFACE-TEMP," + value.toString();
+//                    toWrite.add(maxSurfaceTempETW);
+                }
             }
-            if(maxSurfaceTemp < currSurfaceTemp) {
-                maxSurfaceTemp = currSurfaceTemp;
-                maxSurfaceTempETW = "MAX SURFACE TEMP: "+value.toString();
-//                toWrite.add(value);
+
+
+            if (isCleanAirTempData(currAirTemp)) {
+                if(minAirTemp > currAirTemp) {
+                    minAirTemp = currAirTemp;
+                    minAirTempETW = "MIN-AIR-TEMP," + value.toString();
+//                    toWrite.add(minAirTempETW);
+                }
+                if(maxAirTemp < currAirTemp) {
+                    maxAirTemp = currAirTemp;
+                    maxAirTempETW = "MAX-AIR-TEMP," + value.toString();
+//                    toWrite.add(maxAirTempETW);
+                }
             }
-            if(minAirTemp > currAirTemp) {
-                minAirTemp = currAirTemp;
-                minAirTempETW = "MIN AIR TEMP: " + value.toString();
-//                toWrite.add(value);
-            }
-            if(maxAirTemp < currAirTemp) {
-                maxAirTemp = currAirTemp;
-                maxAirTempETW = "MAX AIR TEMP: " +value.toString();
-//                toWrite.add(value);
-            }
+
 
         }
 
@@ -78,12 +86,30 @@ public class ExtremeTempReducer
             for(String e : toWrite) {
                 sb.append(e);
             }
-
-            context.write(new Text(), new Text(sb.toString()) );
+            context.write(new Text(), new Text(sb.toString()));
         }
 
     }
 
+
+    private boolean isCleanAirTempData(Double currAirTemp) {
+        if (currAirTemp >= 500) {
+            return false;
+        } else if (currAirTemp <= -500) {
+            return false;
+        }
+        return true;
+    }
+
+
+    private boolean isCleanSurTempData(Double currSurfaceTemp) {
+        if(currSurfaceTemp >= 500) {
+            return false;
+        }else if (currSurfaceTemp <= -500) {
+            return false;
+        }
+        return true;
+    }
 
 
 }
