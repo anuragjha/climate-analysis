@@ -18,7 +18,6 @@ public class TravelStartupReducer extends Reducer<Text, NCDCWritable,Text,Text> 
         String geoHashForBestComfortIndex = "";
 
         HashMap<String,TotalTempAndHumidity> geohashToTotal = new HashMap<>();
-        System.out.println("In Reducer!");
 
         for(NCDCWritable ncdcWritable : values){
             String geohash = ncdcWritable.getGeohash().toString();
@@ -36,19 +35,17 @@ public class TravelStartupReducer extends Reducer<Text, NCDCWritable,Text,Text> 
                 geohashToTotal.put(geohash, tth);
             }
         }
+
         for (String geo : geohashToTotal.keySet()){
-            System.out.print("String goe : "+geo);
             TotalTempAndHumidity tth = geohashToTotal.get(geo);
             float avgAirTemp =tth.getAirtemp()/tth.getCount();
             float avgHumidity = tth.getHumidity()/tth.getCount();
-            tth.setComfortIndex((avgAirTemp + avgHumidity)/40);
-            System.out.println("  Comfort Index : "+tth.getComfortIndex());
-            if(tth.getComfortIndex() > 0 && tth.getComfortIndex() < 9){
+            tth.setComfortIndex((avgAirTemp + avgHumidity)/4);
+            if(tth.getComfortIndex() > 0 && tth.getComfortIndex() < 45){
                 if(tth.getComfortIndex() > bestComfortIndex) {
                     bestComfortIndex = tth.getComfortIndex();
                     geoHashForBestComfortIndex = geo;
                 }
-                System.out.println("bestComfortIndex : "+bestComfortIndex+" "+geoHashForBestComfortIndex+" "+key);
             }
         }
         String geoMonth = geoHashForBestComfortIndex + " "+key;

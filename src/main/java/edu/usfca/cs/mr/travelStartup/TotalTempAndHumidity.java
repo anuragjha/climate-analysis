@@ -33,6 +33,11 @@ public class TotalTempAndHumidity {
         return airtemp;
     }
 
+    public float getAirTemperatureinFahreneit(){
+        float airtempInFahreneit = (airtemp * 9/5) + 32;
+        return  airtempInFahreneit;
+    }
+
     public void setAirtemp(float airtemp) {
         this.airtemp = airtemp;
     }
