@@ -1,27 +1,28 @@
-package edu.usfca.cs.mr.solarWind;
+package edu.usfca.cs.mr.correlation;
+import edu.usfca.cs.mr.pcc.RunningStatisticsND;
 import org.apache.hadoop.conf.Configuration;
-import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.mapreduce.Job;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
+import org.apache.hadoop.fs.Path;
 
-public class SolarWindJob {
+public class CorrelationJob {
 
     public static void main(String[] args) {
         try {
             Configuration conf = new Configuration();
 
-            conf.set("mapred.textoutputformat.separator", ",");
+           //x conf.set("mapred.textoutputformat.separator", ",");
 
             /* Job Name. You'll see this in the YARN webapp */
             Job job = Job.getInstance(conf, "Solar Wind");
 
             /* Current class */
-            job.setJarByClass(SolarWindJob.class);
+            job.setJarByClass(CorrelationJob.class);
 
             /* Mapper class */
-            job.setMapperClass(SolarWindMapper.class);
+            job.setMapperClass(CorrelationMapper.class);
 
             /* Combiner class. Combiners are run between the Map and Reduce
              * phases to reduce the amount of output that must be transmitted.
@@ -32,11 +33,11 @@ public class SolarWindJob {
             //job.setCombinerClass(WordCountReducer.class);
 
             /* Reducer class */
-            job.setReducerClass(SolarWindReducer.class);
+            job.setReducerClass(CorrelationReducer.class);
 
             /* Outputs from the Mapper. */
             job.setMapOutputKeyClass(Text.class);
-            job.setMapOutputValueClass(SolarWindDetails.class);
+            job.setMapOutputValueClass(RunningStatisticsND.class);
 
             /* Outputs from the Reducer */
             job.setOutputKeyClass(Text.class);
@@ -59,4 +60,6 @@ public class SolarWindJob {
             System.err.println(e.getMessage());
         }
     }
+
+
 }
