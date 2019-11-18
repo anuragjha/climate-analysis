@@ -22,7 +22,7 @@ extends Mapper<LongWritable, Text, Text, ETWritable> {
     protected void map(LongWritable key, Text value, Context context)
             throws IOException, InterruptedException {
 
-        // emit month-day, ETWritable.
+        // emit year, ETWritable.
         String line = value.toString();
 
         Double currAirTemp = Line.getAir_temperature(line);
@@ -33,15 +33,20 @@ extends Mapper<LongWritable, Text, Text, ETWritable> {
         boolean toSendMinAT = false;
         boolean toSendMaxAT = false;
 
-        if(isCleanData(line)) {
-            if(minSurfaceTemp > currSurfaceTemp) {
+        if(isCleanSurTempData(line)) {
+            if (minSurfaceTemp > currSurfaceTemp) {
                 toSendMinST = true;
                 minSurfaceTemp = currSurfaceTemp;
             }
-            if(maxSurfaceTemp < currSurfaceTemp) {
+            if (maxSurfaceTemp < currSurfaceTemp) {
                 toSendMaxST = true;
                 maxSurfaceTemp = currSurfaceTemp;
             }
+        } else {
+            currSurfaceTemp = -5000.0;
+        }
+
+        if(isCleanAirTempData(line)) {
             if(minAirTemp > currAirTemp) {
                 toSendMinAT = true;
                 minAirTemp = currAirTemp;
@@ -50,18 +55,11 @@ extends Mapper<LongWritable, Text, Text, ETWritable> {
                 toSendMaxAT = true;
                 maxAirTemp = currAirTemp;
             }
+        } else {
+            currAirTemp = -5000.0;
         }
 
         if(toSendMinST || toSendMaxST || toSendMinAT || toSendMaxAT) {
-//            ETempWritable etw = new ETempWritable()
-//                    .setSurFaceTemp(new DoubleWritable(currSurfaceTemp))
-//                    .setAirTemp(new DoubleWritable(currAirTemp));
-
-//            ETKey etk = new ETKey()
-//                    .setToSendMinST(new BooleanWritable(toSendMinST))
-//                    .setToSendMaxST(new BooleanWritable(toSendMaxST))
-//                    .setToSendMinAT(new BooleanWritable(toSendMinAT))
-//                    .setToSendMaxST(new BooleanWritable(toSendMaxAT));
 
             ETWritable etw = new ETWritable()
                     .setLatitude(new Text(Line.getLatitude(line)))
@@ -71,29 +69,34 @@ extends Mapper<LongWritable, Text, Text, ETWritable> {
                     .setSurFaceTemp(new DoubleWritable(currSurfaceTemp))
                     .setAirTemp(new DoubleWritable(currAirTemp));
 
-//            System.out.println(etw.toString());
+
             context.write(
-//                    etk,
                     new Text(Line.getUtc_date(line).substring(0,4)),
                     etw
             );
-
-
         }
-
-
     }
 
 
-    private boolean isCleanData(String line) {
-        if(Line.getAir_temperature(line) >= 500) {
+    private boolean isCleanAirTempData(String line) {
+        if (Line.getAir_temperature(line) >= 500) {
             return false;
         } else if (Line.getAir_temperature(line) <= -500) {
             return false;
         }
+        return true;
+    }
+
+
+    private boolean isCleanSurTempData(String line) {
         if(Integer.parseInt(Line.getSt_flag(line)) != 0) {
             return false;
         }
+
+        if (!Line.getSt_type(line).equalsIgnoreCase("C")) {
+            return false;
+        }
+
         if(Line.getSurface_temperature(line) >= 500) {
             return false;
         }else if (Line.getSurface_temperature(line) <= -500) {

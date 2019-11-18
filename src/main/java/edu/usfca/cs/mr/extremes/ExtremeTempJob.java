@@ -17,6 +17,8 @@ public class ExtremeTempJob {
         try {
             Configuration conf = new Configuration();
 
+            //conf.set("mapred.textoutputformat.separator", ",");
+
             /* Job Name. You'll see this in the YARN webapp */
             Job job = Job.getInstance(conf, "extreme temperature find job");
 

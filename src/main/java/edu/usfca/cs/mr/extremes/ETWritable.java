@@ -102,6 +102,6 @@ public class ETWritable implements Writable {
 
     @Override
     public String toString() {
-        return utcDate + " "+ utcTime + " "+ latitude.toString()+ " "+ longitude.toString()+ " "+ airTemp.toString() + " "+ surfaceTemp.toString()+"\n";
+        return utcDate + ","+ utcTime + ","+ latitude.toString()+ ","+ longitude.toString()+ ","+ airTemp.toString() + ","+ surfaceTemp.toString()+"\n";
     }
 }

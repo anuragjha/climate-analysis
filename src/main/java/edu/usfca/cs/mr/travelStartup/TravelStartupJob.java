@@ -14,7 +14,7 @@ public class TravelStartupJob {
             Configuration conf = new Configuration();
 
             /* Job Name. You'll see this in the YARN webapp */
-            Job job = Job.getInstance(conf, "extreme temperature find job");
+            Job job = Job.getInstance(conf, "Travel startup job");
 
             /* Current class */
             job.setJarByClass(TravelStartupJob.class);
