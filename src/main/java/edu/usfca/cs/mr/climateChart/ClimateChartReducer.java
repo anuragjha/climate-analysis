@@ -17,37 +17,41 @@ public class ClimateChartReducer
         double highTemp = -9999;
         double lowTemp = 9999;
 
-        double avgTemp = 0;
+        //double avgTemp = 0;
         double sumTemp = 0;
 
-        double avgPrecipitation = 0;
+        //double avgPrecipitation = 0;
         double sumPrecip = 0;
 
         int count = 0;
 
+        String geoHash = "";
+
         for (CCMapperWritable value : values) {
+
+            geoHash = value.getGeoHash().toString();
 
             double airTemp = value.getAirTemp().get();
             highTemp = updateHighTemp(highTemp, airTemp);
             lowTemp = updateLowTemp(lowTemp, airTemp);
             sumTemp += airTemp;
 
-
             double precip = value.getPrecip().get();
             sumPrecip += precip;
 
             count += 1;
         }
-        avgTemp = sumTemp / count;
-        avgPrecipitation = sumPrecip / count;
+        double avgTemp = sumTemp / count;
+        double avgPrecipitation = sumPrecip / count;
 
 
         CCReducerObj obj = new CCReducerObj()
+                .setGeoHash(geoHash)
                 .setHighTemp(highTemp)
                 .setLowTemp(lowTemp)
                 .setAvgTemp(avgTemp)
                 .setAvgPrecipitation(avgPrecipitation);
-        context.write(key, new Text(obj.toString()));
+        context.write(key, new Text(","+obj.toString()));
 
 
     }

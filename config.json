@@ -1,5 +1,6 @@
 {
   "dryingOutGeoHash" : "9q4g",
   "movingOutGeoHash" : "9qb",
-  "travelStartupGeoHashes" : ["9q4","9qd","9v6","dh4","8e3"]
+  "travelStartupGeoHashes" : ["9q4","9qd","9v6","dh4","8e3"],
+  "climateChartHash" : "9q"
 }
