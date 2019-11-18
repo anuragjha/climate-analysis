@@ -17,7 +17,7 @@ import java.util.Set;
 public class TravelStartupMapper extends Mapper<LongWritable,Text, Text, NCDCWritable> {
 
     Config config = Config.readConfig("config.json");
-    String[] geoHashes = config.getTravelStartupGeoHashes();//{"9q4","9qd","9v6","dh4","8e3"};
+    String[] geoHashes = {"9q4","9qb","f2r","drm","dqd"};//config.getTravelStartupGeoHashes();//{"9q4","9qd","9v6","dh4","8e3"};
 
     @Override
     protected void map(LongWritable key, Text value, Context context)

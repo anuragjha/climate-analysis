@@ -28,7 +28,7 @@ public class SolarWindMapper extends Mapper<LongWritable, Text,Text,SolarWindDet
         String geohash = Geohash.encode(
                 Float.parseFloat(Line.getLatitude(line)),
                 Float.parseFloat(Line.getLongitude(line)),
-                3
+                4
         );
         if(isCleanData(line)) {
             context.write(new Text(geohash), details);
