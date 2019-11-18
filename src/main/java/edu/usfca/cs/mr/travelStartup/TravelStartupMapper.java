@@ -37,7 +37,9 @@ public class TravelStartupMapper extends Mapper<LongWritable,Text, Text, NCDCWri
         airTemp = (airTemp * 9/5) + 32;
 
         if(geoHashSet.contains(geohash) && isCleanData(line)){
-            context.write(new Text(Line.getUtc_date(line).substring(4,6)),
+            context.write(
+                    //new Text(Line.getUtc_date(line).substring(4,6)),
+                    new Text(geohash),
                     new NCDCWritable()
                     .setAir_temperature(new DoubleWritable(airTemp))
                     .setRelative_humidity(new DoubleWritable(Line.getRelative_humidity(line)))
