@@ -9,8 +9,6 @@ import java.util.HashMap;
 
 public class TravelStartupReducer extends Reducer<Text, NCDCWritable,Text,Text> {
 
-
-
     @Override
     protected void reduce(Text key, Iterable<NCDCWritable> values, Context context)
             throws IOException, InterruptedException{

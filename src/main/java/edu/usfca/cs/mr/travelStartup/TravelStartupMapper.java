@@ -28,7 +28,7 @@ public class TravelStartupMapper extends Mapper<LongWritable,Text, Text, NCDCWri
         String geohash = Geohash.encode(
                 Float.parseFloat(Line.getLatitude(line)),
                 Float.parseFloat(Line.getLongitude(line)),
-                3
+                4
         );
 
         double airTemp = Line.getAir_temperature(line);
