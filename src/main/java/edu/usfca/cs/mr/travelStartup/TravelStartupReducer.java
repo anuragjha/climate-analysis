@@ -9,12 +9,13 @@ import java.util.HashMap;
 
 public class TravelStartupReducer extends Reducer<Text, NCDCWritable,Text,Text> {
 
-    private float bestComfortIndex = 0;
-    private String geoHashForBestComfortIndex = "";
+
 
     @Override
     protected void reduce(Text key, Iterable<NCDCWritable> values, Context context)
             throws IOException, InterruptedException{
+        float bestComfortIndex = 0;
+        String geoHashForBestComfortIndex = "";
 
         HashMap<String,TotalTempAndHumidity> geohashToTotal = new HashMap<>();
         System.out.println("In Reducer!");

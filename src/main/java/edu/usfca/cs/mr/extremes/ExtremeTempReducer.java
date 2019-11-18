@@ -6,33 +6,80 @@ import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Reducer;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ExtremeTempReducer
-        extends Reducer<Text, NCDCWritable, Text, Text> {
+        extends Reducer<Text, ETWritable, Text, Text> {
 
-    float maxTemp = (float) 0.0;
 
     @Override
     protected void reduce(
-            Text key, Iterable<NCDCWritable> values, Context context)
+            Text key, Iterable<ETWritable> values, Context context)
             throws IOException, InterruptedException {
 
+//        System.out.println("In reducer");
 
-        int count = 0;
-        NCDCWritable last = new NCDCWritable();
+        double minSurfaceTemp = 9999;
+        double maxSurfaceTemp = -9999;
+        double minAirTemp = 9999;
+        double maxAirTemp = -9999;
 
-        if (Float.parseFloat(key.toString()) >= maxTemp) {
-            System.out.println("Float.parseFloat(key.toString()) > maxTemp");
-            maxTemp = Float.parseFloat(key.toString());
+        List<String> toWrite = new ArrayList<>();
+         String minSurfaceTempETW = "";
+         String maxSurfaceTempETW = "";
+         String minAirTempETW = "";
+         String maxAirTempETW = "";
 
-            for (NCDCWritable val : values) {
-                System.out.println("val : " + val.getUtc_date().toString());
-                //utc_date = val.getUtc_date();
-                last = val;
-                count += 1;
+
+        for(ETWritable value : values) {
+//            System.out.println(value.toString());
+
+            Double currAirTemp = value.getAirTemp().get();
+            Double currSurfaceTemp = value.getSurFaceTemp().get();
+
+
+            if(minSurfaceTemp > currSurfaceTemp) {
+                minSurfaceTemp = currSurfaceTemp;
+                minSurfaceTempETW = "MIN SURFACE TEMP: "+value.toString();
+//                toWrite.add(value);
+            }
+            if(maxSurfaceTemp < currSurfaceTemp) {
+                maxSurfaceTemp = currSurfaceTemp;
+                maxSurfaceTempETW = "MAX SURFACE TEMP: "+value.toString();
+//                toWrite.add(value);
+            }
+            if(minAirTemp > currAirTemp) {
+                minAirTemp = currAirTemp;
+                minAirTempETW = "MIN AIR TEMP: " + value.toString();
+//                toWrite.add(value);
+            }
+            if(maxAirTemp < currAirTemp) {
+                maxAirTemp = currAirTemp;
+                maxAirTempETW = "MAX AIR TEMP: " +value.toString();
+//                toWrite.add(value);
             }
 
-            context.write(key, new Text(last.toString()));
+        }
+
+        System.out.println(minAirTempETW);
+        System.out.println(maxAirTempETW);
+        System.out.println(minSurfaceTempETW);
+        System.out.println(maxSurfaceTempETW);
+
+
+        toWrite.add(minSurfaceTempETW);
+        toWrite.add(maxSurfaceTempETW);
+        toWrite.add(minAirTempETW);
+        toWrite.add(maxAirTempETW);
+
+        StringBuilder sb = new StringBuilder();
+        if(toWrite.size() > 0) {
+            for(String e : toWrite) {
+                sb.append(e);
+            }
+
+            context.write(new Text(), new Text(sb.toString()) );
         }
 
     }

@@ -27,24 +27,25 @@ public class MovingOut2Mapper
         geoHashesSet.addAll(Arrays.asList(geoHashes));
 
         String geohash = Geohash.encode(
-                Float.parseFloat(Line.getLatitude(line).toString()),
-                Float.parseFloat(Line.getLongitude(line).toString()),
+                Float.parseFloat(Line.getLatitude(line)),
+                Float.parseFloat(Line.getLongitude(line)),
                 3
         );
 
 
-//        if (geoHashesSet.contains(geohash)) { // todo : change to not contains
+        if (!geoHashesSet.contains(geohash)) { // todo : change to not contains
             System.out.println("geohash : "+ geohash);
             if(Float.parseFloat(Line.getPrecipitation(line).toString()) >= 0.0 ) {
                 context.write(
                         new Text(geohash),
                         new NCDCWritable()
+                                .setGeohash(new Text(geohash))
                                 .setAir_temperature(new DoubleWritable(Line.getAir_temperature(line)))
                                 .setPrecipitation(new DoubleWritable(Line.getPrecipitation(line)))
                                 .setSolar_radiation(new DoubleWritable(Line.getSolar_radiation(line)))
                 );
             }
-//        }
+        }
     } // end of func map
 
 

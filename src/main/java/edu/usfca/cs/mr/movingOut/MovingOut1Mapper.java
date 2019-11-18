@@ -16,7 +16,7 @@ import java.util.Set;
 public class MovingOut1Mapper
         extends Mapper<LongWritable, Text, Text, NCDCWritable> {
 
-    String[] geoHashes = {"9qb", "9qc", "9q9", "9qd", "9qe", "9q3", "9q6", "9q7", "9qk", "9q4", "9q5", "9qh", "9qj", "9mu", "9mv"};
+    String[] geoHashes = {"9qb", "9qc", "9qf", "9qg", "9q9", "9qd", "9qe", "9qs", "9q3", "9q6", "9q7", "9qk", "9q4", "9q5", "9qh", "9qj", "9mu", "9mv"};
 
     @Override
     protected void map(LongWritable key, Text value, Context context)
@@ -27,8 +27,8 @@ public class MovingOut1Mapper
         geoHashesSet.addAll(Arrays.asList(geoHashes));
 
         String geohash = Geohash.encode(
-                Float.parseFloat(Line.getLatitude(line).toString()),
-                Float.parseFloat(Line.getLongitude(line).toString()),
+                Float.parseFloat(Line.getLatitude(line)),
+                Float.parseFloat(Line.getLongitude(line)),
                 3
         );
 
