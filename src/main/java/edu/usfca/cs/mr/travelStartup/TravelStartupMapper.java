@@ -52,14 +52,15 @@ public class TravelStartupMapper extends Mapper<LongWritable,Text, Text, NCDCWri
     private boolean isCleanData(String line) {
         if(Line.getAir_temperature(line) >= 500) {
             return false;
-        } else if (Line.getAir_temperature(line) <= -500) {
+        } else if (Line.getAir_temperature(line) <= -100) {
             return false;
         }
-
         if(Integer.parseInt(Line.getRh_flag(line)) != 0) {
             return false;
         }
-
+        if(Line.getRelative_humidity(line)<0){
+            return false;
+        }
         return true;
     }
 }
