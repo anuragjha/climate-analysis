@@ -6,6 +6,29 @@ public class TotalTempAndHumidity {
     private float humidity;
     private float comfortIndex;
     private int count;
+    private String latitude;
+
+    public String getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(String latitude) {
+        if(this.latitude == "") {
+            this.latitude = latitude;
+        }
+    }
+
+    public String getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(String longitude) {
+        if(this.longitude == "") {
+            this.longitude = longitude;
+        }
+    }
+
+    private String longitude;
 
     public float getComfortIndex() {
         return comfortIndex;
@@ -19,6 +42,8 @@ public class TotalTempAndHumidity {
         this.airtemp = airtemp;
         this.humidity = humidity;
         this.count +=i;
+        this.latitude = "";
+        this.longitude = "";
     }
 
     public int getCount() {
