@@ -15,13 +15,13 @@ public class SolarWindJob {
             conf.set("mapred.textoutputformat.separator", ",");
 
             /* Job Name. You'll see this in the YARN webapp */
-            Job job = Job.getInstance(conf, "Solar Wind");
+            Job job = Job.getInstance(conf, "Solar &  Wind Job");
 
             /* Current class */
             job.setJarByClass(SolarWindJob.class);
 
             /* Mapper class */
-            //job.setMapperClass(SolarWindMapper.class);
+            job.setMapperClass(SolarWindMapper.class);
 
             /* Combiner class. Combiners are run between the Map and Reduce
              * phases to reduce the amount of output that must be transmitted.
@@ -32,7 +32,7 @@ public class SolarWindJob {
             //job.setCombinerClass(WordCountReducer.class);
 
             /* Reducer class */
-            //job.setReducerClass(SolarWindReducer.class);
+            job.setReducerClass(SolarWindReducer.class);
 
             /* Outputs from the Mapper. */
             job.setMapOutputKeyClass(Text.class);
