@@ -25,6 +25,4 @@ public class DryingOutReducer extends Reducer<Text, DoubleWritable, Text, Text> 
         //System.out.println("AvgP : "+ avgP);
         context.write(key, new Text(String.valueOf(avgP)));
     }
-
-
 }
