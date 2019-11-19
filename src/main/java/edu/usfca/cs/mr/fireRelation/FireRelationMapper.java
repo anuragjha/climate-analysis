@@ -19,27 +19,34 @@ public class FireRelationMapper
 
         String line = value.toString();
 
-        String[] fields = line.split(",");
+        try {
+            String[] fields = line.split(",");
 
-        if (fields.length >= 9) {
-            Float latitude = Float.parseFloat(fields[7]);
-            Float longitude = Float.parseFloat(fields[8]);
-            String geohash = Geohash.encode(latitude, longitude, 3);
-            String year = fields[2];
-            Double fireSize = Double.parseDouble(fields[5]);
+            if (fields.length >= 9) {
+                Float latitude = Float.parseFloat(fields[7]);
+                Float longitude = Float.parseFloat(fields[8]);
+                String geohash = Geohash.encode(latitude, longitude, 3);
+                String year = fields[2];
+                Double fireSize = Double.parseDouble(fields[5]);
 
-            FireWritable fw = new FireWritable()
-                    .setLatitude(new FloatWritable(latitude))
-                    .setLongitude(new FloatWritable(longitude))
-                    .setGeohash(new Text(geohash))
-                    .setYear(new Text(year))
-                    .setFireSize(new DoubleWritable(fireSize));//latitude, longitude, geohash, year, fireSize);
+                FireWritable fw = new FireWritable()
+                        .setLatitude(new FloatWritable(latitude))
+                        .setLongitude(new FloatWritable(longitude))
+                        .setGeohash(new Text(geohash))
+                        .setYear(new Text(year))
+                        .setFireSize(new DoubleWritable(fireSize));//latitude, longitude, geohash, year, fireSize);
 
 
-            //System.out.println(fw.toString());
+                //System.out.println(fw.toString());
 
-            context.write(new Text(geohash), fw);
+                context.write(new Text(geohash), fw);
+            }
+
+        } catch (Exception e) {
+            System.out.println("Exception");
         }
+
+
 
     }
 
