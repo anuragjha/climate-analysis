@@ -13,7 +13,7 @@ public class CorrelationJob {
         try {
             Configuration conf = new Configuration();
 
-           //x conf.set("mapred.textoutputformat.separator", ",");
+           conf.set("mapred.textoutputformat.separator", ",");
 
             /* Job Name. You'll see this in the YARN webapp */
             Job job = Job.getInstance(conf, "Solar Wind");
