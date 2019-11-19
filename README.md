@@ -8,4 +8,5 @@ See the project spec here: https://www.cs.usfca.edu/~mmalensek/cs677/assignments
 4. TSJ
 5. SWJ
 6. CCJ
-7. 
+7. CJ
+8. FJ
