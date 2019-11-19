@@ -16,7 +16,7 @@ public class CorrelationJob {
            conf.set("mapred.textoutputformat.separator", ",");
 
             /* Job Name. You'll see this in the YARN webapp */
-            Job job = Job.getInstance(conf, "Solar Wind");
+            Job job = Job.getInstance(conf, "Correlation job");
 
             /* Current class */
             job.setJarByClass(CorrelationJob.class);

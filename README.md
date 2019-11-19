@@ -5,6 +5,7 @@ See the project spec here: https://www.cs.usfca.edu/~mmalensek/cs677/assignments
 1. ETJ
 2. DOJ
 3. MOJ
-4. 
-5.
+4. TSJ
+5. SWJ
 6. CCJ
+7. 
